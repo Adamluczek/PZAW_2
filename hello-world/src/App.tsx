@@ -3,13 +3,11 @@ interface IMedia {
   yearRelease: number;
   cover: string;
 }
-interface IMovie extends IMedia {
-
+interface IMovie extends IMedia {}
+interface IBook extends IMedia {
+  pages: number;
 }
-interface IBook extends IMedia{
-  author: string;
-}
-interface IMusic extends IMedia{
+interface IMusic extends IMedia {
   author?: string;
   songs?: ISong[];
 }
@@ -50,8 +48,8 @@ function Book(props: IBook) {
     >
       <img src={props.cover} height={400} width={300} />
       <p>{props.title}</p>
-      <p>{props.yearRelease}</p>
-      <p>{props.author}</p>
+      <p>Year: {props.yearRelease}</p>
+      <p>Pages: {props.pages}</p>
     </div>
   );
 }
@@ -115,25 +113,31 @@ function App() {
         <Book
           title="The Hobbit"
           yearRelease={1937}
-          author="J.R.R. Tolkien"
+          pages={750}
           cover="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfwJUwn-QPZQX9CiCOhzv0LOhO3q77frc-A9q58TU6tQ&s=10"
         />
         <Book
           title="Crime and Punishment"
           yearRelease={1866}
-          author="Fiodor Dostojewski"
+          pages={500}
           cover="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7naitelD_J_N78B_h1CSTdwT4KeYEd8WyiP3eSXVMRA&s=10"
         />
         <Book
           title="1984"
           yearRelease={1949}
-          author="George Orwell"
+          pages={1000}
           cover="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQj89yAs1mZbuLqWY-y9Lq9e6Mo9bhlDkEwBBT0_kIZhg&s=10"
         />
       </section>
       <h2>Music</h2>
       <section>
-      <Music title="The Documentary" yearRelease={2005} author="The Game" cover="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmRsqYHNNTwNKckXkskCjouylYEB4jcKKKadXKwQG4kQ&s" songs={[{"songTitle":"Intro to the Documentary", "duration":"0:32"}]}/>
+        <Music
+          title="The Documentary"
+          yearRelease={2005}
+          author="The Game"
+          cover="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmRsqYHNNTwNKckXkskCjouylYEB4jcKKKadXKwQG4kQ&s"
+          songs={[{ songTitle: "Intro to the Documentary", duration: "0:32" }]}
+        />
       </section>
     </div>
   );
