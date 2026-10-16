@@ -8,14 +8,96 @@ interface IBook extends IMedia {
   pages: number;
 }
 interface IMusic extends IMedia {
-  author?: string;
-  songs?: ISong[];
+  genre:string;
+
+  author: string;
+  songs: ISong[];
 }
 interface ISong {
   songTitle: string;
   duration: string;
 }
+let movies : IMovie[]= [{
+  "title":"The Matrix",
+  "yearRelease" : 1999,
+  "cover":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnBiXhAF9CKFZb-AhFH3HF7nivkRhUTFbQXRB7VUlFtJLwGI_apHxgDp_F1RnYI3k0dfCYQCEDZkpwdRtLbuT4vVyCaSXQo0V4xHgk0i5c&s=10"
+},
+{"title":"Cars",
+          "yearRelease":2006,
+          "cover":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyj2Dsw1ETDZT2gYpEP7YIwgRn5w96HXQ_Xg25TyihUPgt3fNBzcj46xGCcaAtz2Nu2bt6JPCKRHPUFBFDWL70tcJ-hNJ-Syo_2lKxVIbQ&s=10"
 
+
+},
+{"title":"Harry Potter and the Prisoner of Azkaban",
+          "yearRelease":2004,
+          "cover":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-xCyG_BBPuYioiLHhegv57Mj2EbYjdZPD9TwI3FkIdDgezcJici_25pxxZLScyD8foo-ccy7Xlshw8F2NTwKMDfeYvYYVWNpP-vdGgyVdeg&s=10"}
+]
+
+let albums : IMusic[] = [{
+  "title":"The Documentary",
+          "genre":"RAP",
+          "yearRelease":2005,
+          "author":"The Game",
+          "cover":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRukwFIyhKBefhW89drkBUJqMOzodrccdN-daie7bOYTQ&s",
+          "songs":[
+  { "songTitle": "Intro", "duration": "0:32" },
+  { "songTitle": "Westside Story", "duration": "3:43" },
+  { "songTitle": "Dreams", "duration": "4:46" },
+  { "songTitle": "Hate It Or Love It", "duration": "3:26" },
+  { "songTitle": "Higher", "duration": "4:05" },
+  { "songTitle": "How We Do", "duration": "3:55" },
+  { "songTitle": "Don't Need Your Love", "duration": "4:26" },
+  { "songTitle": "Church For Thugs", "duration": "4:00" },
+  { "songTitle": "Put You On The Game", "duration": "4:14" },
+  { "songTitle": "Start From Scratch", "duration": "4:07" },
+  { "songTitle": "The Documentary", "duration": "4:11" },
+  { "songTitle": "Runnin'", "duration": "4:26" },
+  { "songTitle": "No More Fun And Games", "duration": "2:37" },
+  { "songTitle": "We Ain't", "duration": "4:46" },
+  { "songTitle": "Where I'm From", "duration": "3:08" },
+  { "songTitle": "Special", "duration": "3:57" },
+  { "songTitle": "Don't Worry", "duration": "3:34" },
+  { "songTitle": "Like Father, Like Son", "duration": "5:27" }
+]
+
+}, {
+  "title":"Doo-Wops & Hooligans",
+  "genre":"POP",
+  "yearRelease" : 2010,
+  "author" :"Bruno Mars",
+  "cover": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZtOmmyyDRk9i1EKQyobj5SXxX_vIGAYhS_5yLyUK3HQ&s=10",
+  "songs":[
+  { "songTitle": "Grenade", "duration": "3:42" },
+  { "songTitle": "Just the Way You Are", "duration": "3:40" },
+  { "songTitle": "Our First Time", "duration": "4:03" },
+  { "songTitle": "Runaway Baby", "duration": "2:27" },
+  { "songTitle": "The Lazy Song", "duration": "3:15" },
+  { "songTitle": "Marry You", "duration": "3:50" },
+  { "songTitle": "Talking to the Moon", "duration": "3:37" },
+  { "songTitle": "Liquor Store Blues", "duration": "3:49" },
+  { "songTitle": "Count On Me", "duration": "3:17" },
+  { "songTitle": "The Other Side", "duration": "3:47" }
+]
+}]
+
+let books: IBook[] = [{
+  "title":"The Hobbit",
+          "yearRelease":1937,
+          "pages":750,
+          "cover":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfwJUwn-QPZQX9CiCOhzv0LOhO3q77frc-A9q58TU6tQ&s=10"
+},
+{
+  "title":"Crime and Punishment",
+          "yearRelease":1866,
+          "pages":500,
+          "cover":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7naitelD_J_N78B_h1CSTdwT4KeYEd8WyiP3eSXVMRA&s=10"
+},
+{
+  "title":"1984",
+          "yearRelease":1949,
+          "pages":1000,
+          "cover":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQj89yAs1mZbuLqWY-y9Lq9e6Mo9bhlDkEwBBT0_kIZhg&s=10"
+}]
 function Movie(props: IMovie) {
   return (
     <div
@@ -69,6 +151,7 @@ function Music(props: IMusic) {
       <p>{props.title}</p>
       <p>{props.yearRelease}</p>
       <p>{props.author}</p>
+      <p>{props.genre}</p>
 
       <table>
         <tr>
@@ -92,52 +175,46 @@ function App() {
     <div>
       <h2>Movies</h2>
       <section style={{ display: "flex", gap: "20px", padding: "20px" }}>
-        <Movie
-          title="The Matrix"
-          yearRelease={1999}
-          cover="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnBiXhAF9CKFZb-AhFH3HF7nivkRhUTFbQXRB7VUlFtJLwGI_apHxgDp_F1RnYI3k0dfCYQCEDZkpwdRtLbuT4vVyCaSXQo0V4xHgk0i5c&s=10"
+      {movies.map(movie =>{
+        return(
+            <Movie
+          title={movie.title}
+          yearRelease={movie.yearRelease}
+          cover={movie.cover}
         />
-        <Movie
-          title="Cars"
-          yearRelease={2006}
-          cover="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyj2Dsw1ETDZT2gYpEP7YIwgRn5w96HXQ_Xg25TyihUPgt3fNBzcj46xGCcaAtz2Nu2bt6JPCKRHPUFBFDWL70tcJ-hNJ-Syo_2lKxVIbQ&s=10"
-        />
-        <Movie
-          title="Harry Potter and the Prisoner of Azkaban"
-          yearRelease={2004}
-          cover="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-xCyG_BBPuYioiLHhegv57Mj2EbYjdZPD9TwI3FkIdDgezcJici_25pxxZLScyD8foo-ccy7Xlshw8F2NTwKMDfeYvYYVWNpP-vdGgyVdeg&s=10"
-        />
+        )
+      })}
+        
       </section>
       <h2>Books</h2>
       <section style={{ display: "flex", gap: "20px", padding: "20px" }}>
-        <Book
-          title="The Hobbit"
-          yearRelease={1937}
-          pages={750}
-          cover="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfwJUwn-QPZQX9CiCOhzv0LOhO3q77frc-A9q58TU6tQ&s=10"
+        {books.map(book =>{
+        return(
+            <Book
+          title={book.title}
+          yearRelease={book.yearRelease}
+          pages={book.pages}
+          cover={book.cover}
         />
-        <Book
-          title="Crime and Punishment"
-          yearRelease={1866}
-          pages={500}
-          cover="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7naitelD_J_N78B_h1CSTdwT4KeYEd8WyiP3eSXVMRA&s=10"
-        />
-        <Book
-          title="1984"
-          yearRelease={1949}
-          pages={1000}
-          cover="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQj89yAs1mZbuLqWY-y9Lq9e6Mo9bhlDkEwBBT0_kIZhg&s=10"
-        />
+        )
+      })}
+        
       </section>
       <h2>Music</h2>
-      <section>
-        <Music
-          title="The Documentary"
-          yearRelease={2005}
-          author="The Game"
-          cover="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmRsqYHNNTwNKckXkskCjouylYEB4jcKKKadXKwQG4kQ&s"
-          songs={[{ songTitle: "Intro to the Documentary", duration: "0:32" }]}
+      <section style={{ display: "flex", gap: "20px", padding: "20px" }}>
+        {albums.map(album =>{
+        return(
+            <Music
+          title={album.title}
+          genre={album.genre}
+          yearRelease={album.yearRelease}
+          author={album.author}
+          cover={album.cover}
+          songs={album.songs}
         />
+        )
+      })}
+        
       </section>
     </div>
   );
