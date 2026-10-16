@@ -143,9 +143,10 @@ function Movie(props: IMovie) {
         padding: "20px",
       }}
     >
-      <img src={props.cover} height={400} width={300} />
+      <img src={props.cover} height="75%" width="90%" />
       <p>{props.title}</p>
       <p>{props.yearRelease}</p>
+      {props.rating >= 8 && <p>Świetna ocena!</p>}
     </div>
   );
 }
@@ -165,6 +166,7 @@ function Book(props: IBook) {
       <p>{props.title}</p>
       <p>Year: {props.yearRelease}</p>
       <p>Pages: {props.pages}</p>
+      {props.yearRelease <2000 && <p>Klasyka</p>}
     </div>
   );
 }
@@ -185,7 +187,7 @@ function Music(props: IMusic) {
       <p>{props.yearRelease}</p>
       <p>{props.author}</p>
       <p>{props.genre}</p>
-
+      {props.songs.length > 0 ?
       <table>
         <tr>
           <th>#</th>
@@ -200,6 +202,7 @@ function Music(props: IMusic) {
           </tr>
         ))}
       </table>
+:<p>Brak utworów</p>}
     </div>
   );
 }
