@@ -1,9 +1,13 @@
+
+
 interface IMedia {
   title: string;
   yearRelease: number;
   cover: string;
 }
-interface IMovie extends IMedia {}
+interface IMovie extends IMedia {
+  rating:number;
+}
 interface IBook extends IMedia {
   pages: number;
 }
@@ -20,17 +24,34 @@ interface ISong {
 let movies : IMovie[]= [{
   "title":"The Matrix",
   "yearRelease" : 1999,
-  "cover":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnBiXhAF9CKFZb-AhFH3HF7nivkRhUTFbQXRB7VUlFtJLwGI_apHxgDp_F1RnYI3k0dfCYQCEDZkpwdRtLbuT4vVyCaSXQo0V4xHgk0i5c&s=10"
+  "cover":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnBiXhAF9CKFZb-AhFH3HF7nivkRhUTFbQXRB7VUlFtJLwGI_apHxgDp_F1RnYI3k0dfCYQCEDZkpwdRtLbuT4vVyCaSXQo0V4xHgk0i5c&s=10",
+  rating:10
 },
 {"title":"Cars",
           "yearRelease":2006,
-          "cover":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyj2Dsw1ETDZT2gYpEP7YIwgRn5w96HXQ_Xg25TyihUPgt3fNBzcj46xGCcaAtz2Nu2bt6JPCKRHPUFBFDWL70tcJ-hNJ-Syo_2lKxVIbQ&s=10"
+          "cover":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyj2Dsw1ETDZT2gYpEP7YIwgRn5w96HXQ_Xg25TyihUPgt3fNBzcj46xGCcaAtz2Nu2bt6JPCKRHPUFBFDWL70tcJ-hNJ-Syo_2lKxVIbQ&s=10",
+    rating:7
 
 
 },
 {"title":"Harry Potter and the Prisoner of Azkaban",
           "yearRelease":2004,
-          "cover":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-xCyG_BBPuYioiLHhegv57Mj2EbYjdZPD9TwI3FkIdDgezcJici_25pxxZLScyD8foo-ccy7Xlshw8F2NTwKMDfeYvYYVWNpP-vdGgyVdeg&s=10"}
+          "cover":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-xCyG_BBPuYioiLHhegv57Mj2EbYjdZPD9TwI3FkIdDgezcJici_25pxxZLScyD8foo-ccy7Xlshw8F2NTwKMDfeYvYYVWNpP-vdGgyVdeg&s=10",
+          rating:8
+        },
+        {"title":"F1",
+          "yearRelease":2025,
+          "cover":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRssiNayi8SkxMl_EkuJFbZnx3wc_qA-thjWgHZnNAOXw&s=10",
+          rating:9
+        },
+        {"title":"Oppenheimer",
+          "yearRelease":2023,
+          "cover":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkAmMiZULmpY1cmxk4iMzthKH3zJxzFckHezXTZRDdSSU3B0K1QyfOjrkWwJqFz_05dECXpD7_JbkIwCardzBaegxNPTmv7mXae_72WSXeZw&s=10",
+          rating:10
+        },
+        
+      
+
 ]
 
 let albums : IMusic[] = [{
@@ -98,10 +119,22 @@ let books: IBook[] = [{
           "pages":1000,
           "cover":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQj89yAs1mZbuLqWY-y9Lq9e6Mo9bhlDkEwBBT0_kIZhg&s=10"
 }]
+//Sotowanie 
+let moviesSotedByTitle = movies.toSorted((a,b) => a.title.localeCompare(b.title))
+let booksSotedByTitle = books.toSorted((a,b) => a.title.localeCompare(b.title))
+let albumsSotedByTitle = albums.toSorted((a,b) => a.title.localeCompare(b.title))
+
+let moviesAfter2010 = movies.filter(movie => movie.yearRelease > 2010)
+let booksSortedByYear = books.toSorted((a,b) => a.yearRelease - b.yearRelease)
+let albumWithMostSongs = albums[0]
+albums.forEach(album =>{
+  album.songs.length > albumWithMostSongs.songs.length;
+})
 function Movie(props: IMovie) {
   return (
     <div
       style={{
+        width :"27%",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -174,47 +207,56 @@ function App() {
   return (
     <div>
       <h2>Movies</h2>
-      <section style={{ display: "flex", gap: "20px", padding: "20px" }}>
+      <section style={{ display: "flex", gap: "20px", padding: "20px", flexWrap: "wrap" }}>
       {movies.map(movie =>{
         return(
             <Movie
-          title={movie.title}
-          yearRelease={movie.yearRelease}
-          cover={movie.cover}
+          {...movie}
         />
         )
       })}
         
       </section>
       <h2>Books</h2>
-      <section style={{ display: "flex", gap: "20px", padding: "20px" }}>
+      <section style={{ display: "flex", gap: "20px", padding: "20px", flexWrap: "wrap" }}>
         {books.map(book =>{
         return(
             <Book
-          title={book.title}
-          yearRelease={book.yearRelease}
-          pages={book.pages}
-          cover={book.cover}
+          {...book}
         />
         )
       })}
         
       </section>
       <h2>Music</h2>
-      <section style={{ display: "flex", gap: "20px", padding: "20px" }}>
+      <section style={{ display: "flex", gap: "20px", padding: "20px", flexWrap: "wrap" }}>
         {albums.map(album =>{
         return(
             <Music
-          title={album.title}
-          genre={album.genre}
-          yearRelease={album.yearRelease}
-          author={album.author}
-          cover={album.cover}
-          songs={album.songs}
+          {...album}
         />
         )
       })}
         
+      </section>
+      <h2>Movies after 2010</h2>
+      <section style={{ display: "flex", gap: "20px", padding: "20px", flexWrap: "wrap" }}>
+      {moviesAfter2010.map(movie =>{
+        return (<Movie {...movie}/>)
+      })
+      
+      
+      }
+      </section>
+      <h2>Books sorted by year</h2>
+      <section style={{ display: "flex", gap: "20px", padding: "20px", flexWrap: "wrap" }}>
+        {booksSortedByYear.map(movie =>{
+        return (<Book {...movie}/>)
+      })}
+      </section>
+      <h2>The album with the most songs</h2>
+      <section style={{ display: "flex", gap: "20px", padding: "20px", flexWrap: "wrap" }}>
+        {<Music {...albumWithMostSongs}/>}
       </section>
     </div>
   );
