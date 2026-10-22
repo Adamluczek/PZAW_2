@@ -1,5 +1,4 @@
-
-
+import { useState, type ReactNode } from "react";
 interface IMedia {
   title: string;
   yearRelease: number;
@@ -128,9 +127,28 @@ let moviesAfter2010 = movies.filter(movie => movie.yearRelease > 2010)
 let booksSortedByYear = books.toSorted((a,b) => a.yearRelease - b.yearRelease)
 let albumWithMostSongs = albums[0]
 albums.forEach(album =>{
-  album.songs.length > albumWithMostSongs.songs.length;
+  if(album.songs.length > albumWithMostSongs.songs.length){
+    albumWithMostSongs = album;
+  }
 })
+
+
+function Section(props : {title:string; children:ReactNode}){
+  const [isOpen, setIsOpen] = useState(true);
+  return(
+    <div>
+      <h2 onClick={() => setIsOpen(!isOpen)} style={{cursor:"pointer"}}>
+        {isOpen ? "▼" : "▶"} {props.title}
+      </h2>
+      {isOpen && (
+        <section style={{ display: "flex", gap: "20px", padding: "20px", flexWrap: "wrap" }}>{props.children}</section>
+      )}
+    </div>
+  )
+}
+
 function Movie(props: IMovie) {
+  
   return (
     <div
       style={{
@@ -151,6 +169,7 @@ function Movie(props: IMovie) {
   );
 }
 function Book(props: IBook) {
+  
   return (
     <div
       style={{
@@ -171,6 +190,7 @@ function Book(props: IBook) {
   );
 }
 function Music(props: IMusic) {
+  
   return (
     <div
       style={{
@@ -209,58 +229,39 @@ function Music(props: IMusic) {
 function App() {
   return (
     <div>
-      <h2>Movies</h2>
-      <section style={{ display: "flex", gap: "20px", padding: "20px", flexWrap: "wrap" }}>
-      {movies.map(movie =>{
-        return(
-            <Movie
-          {...movie}
-        />
-        )
-      })}
-        
-      </section>
-      <h2>Books</h2>
-      <section style={{ display: "flex", gap: "20px", padding: "20px", flexWrap: "wrap" }}>
-        {books.map(book =>{
-        return(
-            <Book
-          {...book}
-        />
-        )
-      })}
-        
-      </section>
-      <h2>Music</h2>
-      <section style={{ display: "flex", gap: "20px", padding: "20px", flexWrap: "wrap" }}>
-        {albums.map(album =>{
-        return(
-            <Music
-          {...album}
-        />
-        )
-      })}
-        
-      </section>
-      <h2>Movies after 2010</h2>
-      <section style={{ display: "flex", gap: "20px", padding: "20px", flexWrap: "wrap" }}>
-      {moviesAfter2010.map(movie =>{
-        return (<Movie {...movie}/>)
-      })
-      
-      
-      }
-      </section>
-      <h2>Books sorted by year</h2>
-      <section style={{ display: "flex", gap: "20px", padding: "20px", flexWrap: "wrap" }}>
-        {booksSortedByYear.map(movie =>{
-        return (<Book {...movie}/>)
-      })}
-      </section>
-      <h2>The album with the most songs</h2>
-      <section style={{ display: "flex", gap: "20px", padding: "20px", flexWrap: "wrap" }}>
-        {<Music {...albumWithMostSongs}/>}
-      </section>
+      <Section title="Movies">
+        {movies.map((movie) => (
+          <Movie key={movie.title} {...movie} />
+        ))}
+      </Section>
+
+      <Section title="Books">
+        {books.map((book) => (
+          <Book key={book.title} {...book} />
+        ))}
+      </Section>
+
+      <Section title="Music">
+        {albums.map((album) => (
+          <Music key={album.title} {...album} />
+        ))}
+      </Section>
+
+      <Section title="Movies after 2010">
+        {moviesAfter2010.map((movie) => (
+          <Movie key={movie.title} {...movie} />
+        ))}
+      </Section>
+
+      <Section title="Books sorted by year">
+        {booksSortedByYear.map((book) => (
+          <Book key={book.title} {...book} />
+        ))}
+      </Section>
+
+      <Section title="The album with the most songs">
+        <Music {...albumWithMostSongs} />
+      </Section>
     </div>
   );
 }
