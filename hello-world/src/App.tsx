@@ -1,4 +1,5 @@
 import { useState, type ReactNode } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 interface IMedia {
   title: string;
   yearRelease: number;
@@ -141,7 +142,7 @@ function Section(props : {title:string; children:ReactNode}){
         {isOpen ? "▼" : "▶"} {props.title}
       </h2>
       {isOpen && (
-        <section style={{ display: "flex", gap: "20px", padding: "20px", flexWrap: "wrap" }}>{props.children}</section>
+        <section  className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">{props.children}</section>
       )}
     </div>
   )
@@ -149,86 +150,82 @@ function Section(props : {title:string; children:ReactNode}){
 
 function Movie(props: IMovie) {
   
-  return (
-    <div
-      style={{
-        width :"27%",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: "10px",
-        border: "1px solid black",
-        padding: "20px",
-      }}
-    >
-      <img src={props.cover} height="75%" width="90%" />
-      <p>{props.title}</p>
-      <p>{props.yearRelease}</p>
-      {props.rating >= 8 && <p>Świetna ocena!</p>}
+   return (
+    <div className="col">
+    <div className="card h-100">
+      <img src={props.cover} height="75%"  className="card-img-top" alt={props.title}/>
+      <div className="card-body">
+        <p className="card-title">{props.title}</p>
+        <p className="card-text">{props.yearRelease}</p>
+        {props.rating >= 8 && <p className="card-text">Świetna ocena!</p>}
+      </div>
+    </div>
     </div>
   );
 }
 function Book(props: IBook) {
   
   return (
+    <div className="col">
     <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: "10px",
-        border: "1px solid black",
-        padding: "20px",
-      }}
+      className="card h-100"
     >
-      <img src={props.cover} height={400} width={300} />
-      <p>{props.title}</p>
-      <p>Year: {props.yearRelease}</p>
-      <p>Pages: {props.pages}</p>
-      {props.yearRelease <2000 && <p>Klasyka</p>}
+      <img src={props.cover} height="75%" className="card-img-top" />
+      <div className="card-body">
+      <p className="card-title"> {props.title}</p>
+      <p className="card-text">Year: {props.yearRelease}</p>
+      <p className="card-text">Pages: {props.pages}</p>
+      {props.yearRelease <2000 && <p className="card-text">Klasyka</p>}
+      </div>
+    </div>
     </div>
   );
 }
 function Music(props: IMusic) {
   
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: "10px",
-        border: "1px solid black",
-        padding: "20px",
-      }}
-    >
-      <img src={props.cover} height={400} width={300} />
-      <p>{props.title}</p>
-      <p>{props.yearRelease}</p>
-      <p>{props.author}</p>
-      <p>{props.genre}</p>
-      {props.songs.length > 0 ?
-      <table>
-        <tr>
-          <th>#</th>
-          <th>Song Title</th>
-          <th>Duration</th>
-        </tr>
-        {props.songs?.map((song, index) => (
-          <tr>
-            <td>{index + 1}</td>
-            <td>{song.songTitle}</td>
-            <td>{song.duration}</td>
-          </tr>
-        ))}
-      </table>
-:<p>Brak utworów</p>}
+    <div className="col">
+    <div className="card h-100">
+      <img src={props.cover} className="card-img-top" alt={props.title} />
+      <div className="card-body">
+        <p className="card-title">{props.title}</p>
+        <p className="card-text">{props.yearRelease}</p>
+        <p className="card-text">{props.author}</p>
+        <p className="card-text">{props.genre}</p>
+
+        {props.songs.length > 0 ? (
+          <table className="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Song Title</th>
+                <th className="text-end">Duration</th>
+              </tr>
+            </thead>
+            <tbody>
+              {props.songs.map((song, index) => (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>{song.songTitle}</td>
+                  <td className="text-end">{song.duration}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          
+        ) : (
+          <div className="alert alert-warning" role="alert">
+            Brak utworów
+          </div>
+        )}
+      </div>
+    </div>
     </div>
   );
 }
 function App() {
   return (
-    <div>
+    <div className="container">
       <Section title="Movies">
         {movies.map((movie) => (
           <Movie key={movie.title} {...movie} />
