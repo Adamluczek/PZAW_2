@@ -1,6 +1,7 @@
 import {Movie, Music, Book, Section} from "./components"
 import type {IMovie, IMusic, IBook } from "./interfaces/media"
 import data from "./data.json"
+import { useState } from "react"
 const movies: IMovie[] = data.movies
 const albums: IMusic[] = data.albums
 const books: IBook[] = data.books
@@ -21,20 +22,52 @@ albums.forEach(album =>{
 
 
 function App() {
+  const [currentTextMovie, changeTextMovie] =  useState("")
+  const [currentTextBook, changeTextBook] =  useState("")
+  const [currentTextAlbum, changeTextAlbum] =  useState("")
   return (
+    
     <div className="container">
+     <input
+  type="text"
+  className="form-control"
+  placeholder="Wpisz tytuł"
+  id="movie-search"
+  onChange={(event)=>{
+    console.log(event.target.value);
+    changeTextMovie(event.target.value);
+  }}
+/>
       <Section title="Movies">
         {movies.map((movie) => (
           <Movie key={movie.title} {...movie} />
         ))}
       </Section>
-
+<input
+  type="text"
+  className="form-control"
+  placeholder="Wpisz tytuł"
+  id="book-search"
+   onChange={(event)=>{
+    console.log(event.target.value);
+    changeTextBook(event.target.value);
+  }}
+/>
       <Section title="Books">
         {books.map((book) => (
           <Book key={book.title} {...book} />
         ))}
       </Section>
-
+<input
+  type="text"
+  className="form-control"
+  placeholder="Wpisz tytuł"
+  id="album-search"
+   onChange={(event)=>{
+    console.log(event.target.value);
+    changeTextAlbum(event.target.value);
+  }}
+/>
       <Section title="Music">
         {albums.map((album) => (
           <Music key={album.title} {...album} />
@@ -53,9 +86,9 @@ function App() {
         ))}
       </Section>
 
-      <Section title="The album with the most songs">
+      <Section title="The album with the most songs" >
         <Music {...albumWithMostSongs} />
-      </Section>
+      </Section >
     </div>
   );
 }

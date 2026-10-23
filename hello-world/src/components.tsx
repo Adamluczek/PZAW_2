@@ -1,6 +1,13 @@
 import { useState, type ReactNode } from "react";
 import type {IMovie, IBook, IMusic} from "./interfaces/media"
 import "bootstrap/dist/css/bootstrap.min.css";
+
+
+function handleSongClick(title:string, album:string){
+  
+console.log("Wybrano utwór:"+title+" z " + album);
+}
+
 export function Section(props : {title:string; children:ReactNode}){
   const [isOpen, setIsOpen] = useState(true);
   return(
@@ -18,12 +25,18 @@ export function Section(props : {title:string; children:ReactNode}){
 export function Movie(props: IMovie) {
   
    return (
-    <div className="col">
+    <div className="col" onClick={() =>{
+      console.log("Wybrano film: " + props.title)
+    }}>
     <div className="card h-100">
       <img src={props.cover} height="75%"  className="card-img-top" alt={props.title}/>
       <div className="card-body">
         <p className="card-title">{props.title}</p>
         <p className="card-text">{props.yearRelease}</p>
+        <button onClick={(event)=>{
+      console.log("Pokaż szczegóły dla: " + props.title)
+      event.stopPropagation()}}>
+        Pokaż szczegóły</button>
         {props.rating >= 8 && <p className="card-text">Świetna ocena!</p>}
       </div>
     </div>
@@ -71,7 +84,7 @@ export function Music(props: IMusic) {
             </thead>
             <tbody>
               {props.songs.map((song, index) => (
-                <tr key={index}>
+                <tr key={index} onClick={()=>handleSongClick(song.songTitle, props.title)}>
                   <td>{index + 1}</td>
                   <td>{song.songTitle}</td>
                   <td className="text-end">{song.duration}</td>
