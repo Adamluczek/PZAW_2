@@ -64,9 +64,11 @@ function App() {
           </div>
         ))}
       </div>
-      <button onClick={restartGame} className="restartButton">
-        Zrestartuj grę
-      </button>
+      {(isDraw || winner) && (
+        <button onClick={restartGame} className="restartButton">
+          Zrestartuj grę
+        </button>
+      )}
     </div>
   );
 }
