@@ -47,16 +47,11 @@ function App() {
       />
       <Section title="Movies">
         {filteredMovies.length > 0 ? (
-          movies.map(
-            (movie) =>
-              movie.title
-                .toLowerCase()
-                .includes(currentTextMovie.toLocaleLowerCase()) && (
-                <Movie key={movie.title} {...movie} />
-              ),
-          )
+          filteredMovies.map((movie) => <Movie key={movie.title} {...movie} />)
         ) : (
-          <p className="w-100 fs-3 fw-bold text-center">Nie znaleziono filmów</p>
+          <p className="w-100 fs-3 fw-bold text-center">
+            Nie znaleziono filmów
+          </p>
         )}
       </Section>
       <input

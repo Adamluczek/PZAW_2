@@ -3,7 +3,7 @@ import type { IMovie, IBook, IMusic } from "./interfaces/media";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function handleSongClick(title: string, album: string) {
-  console.log("Wybrano utwór:" + title + " z " + album);
+  console.log("Wybrano utwór: " + title + " z " + album);
 }
 
 export function Section(props: { title: string; children: ReactNode }) {
