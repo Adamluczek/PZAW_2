@@ -2,9 +2,8 @@ import { useState } from "react";
 
 
 function App() {
- const [tasks, setTasks] = useState([{"isDone" : true, "text": "Pozmywać naczynia"}, {"isDone" : false, "text": "Poodkurzać"}])
-const[tasksDone, setDoneTasks] = useState(tasks.filter((task)=> task.isDone))
-const [tasksNotDone, setNotDoneTasks] =  useState(tasks.filter((task)=> !task.isDone))
+ const [tasks, setTasks] = useState<{"isDone" : boolean, "text": string}[]>([{"isDone" : true, "text": "Pozmywać naczynia"}, {"isDone" : false, "text": "Poodkurzać"}])
+
 const [newTaskTitle, setNewTaskTitle] = useState("")
 const [isShownAll, setIsShown] = useState(true)
 const [isShownDone, setIsShownDone] = useState(false)
@@ -14,19 +13,21 @@ function handleAddTaks(task:string){
   let newTasks = tasks.slice()
   newTasks.push({"isDone" : false, "text":task})
   setTasks(newTasks)
-  setNotDoneTasks(newTasks.filter((task)=> !task.isDone))
+
 
 }
-function handleChangeStatus(index: number){
-  let newTasks = tasks.slice()
-  newTasks[index].isDone = !newTasks[index].isDone
-  console.log(newTasks)
-  console.log(tasksDone)
-  console.log(tasksNotDone)
+function handleChangeStatus( changedTask : {"isDone" : boolean, "text": string}){
+  changedTask.isDone = !changedTask.isDone;
+  let newTasks = tasks.map((task,) =>
+      task.text === changedTask.text ? changedTask : task,
+    );
+    console.log(newTasks)
   setTasks(newTasks)
-  setDoneTasks(newTasks.filter((task)=> task.isDone))
-  setNotDoneTasks(newTasks.filter((task)=> !task.isDone))
+  console.log(newTasks)
+
 }
+  const tasksDone = tasks.filter((task)=> task.isDone)
+  const tasksNotDone = tasks.filter((task)=> !task.isDone)
 
   return(
     <div>
@@ -50,18 +51,18 @@ function handleChangeStatus(index: number){
     {isShownAll && (
     tasks.map((task, index)=>
     <div>
-      <input key={index} type="checkbox" checked={task.isDone} onClick={() => handleChangeStatus(index)}/>{task.text} nic</div>
+      <input key={index} type="checkbox" checked={task.isDone} onClick={() => handleChangeStatus(task)}/>{task.text} </div>
     ))}
     {isShownDone && (
       tasksDone.map((task, index)=>
     <div>
-      <input key={index} type="checkbox" checked={task.isDone} onClick={() => handleChangeStatus(index)}/>{task.text} cos</div>
+      <input key={index} type="checkbox" checked={task.isDone} onClick={() => handleChangeStatus( task)}/>{task.text} </div>
     )
     )}
     {isShownNotDone && (
       tasksNotDone.map((task, index)=>
     <div>
-      <input key={index} type="checkbox" checked={task.isDone} onClick={() => handleChangeStatus(index)}/>{task.text} dupa</div>
+      <input key={index} type="checkbox" checked={task.isDone} onClick={() => handleChangeStatus( task)}/>{task.text} </div>
     )
     )}
     <p>Zadania do wykonania {tasksNotDone.length}</p>
